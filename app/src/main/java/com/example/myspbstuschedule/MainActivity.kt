@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.myspbstuschedule.presentation.screens.schedule.ScheduleContent
 import com.example.myspbstuschedule.presentation.screens.selection.SelectionContent
 import com.example.myspbstuschedule.ui.theme.MySpbstuScheduleTheme
 
@@ -26,13 +27,17 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MySpbstuScheduleTheme {
-                SelectionContent(
+//                SelectionContent(
+//                    modifier = Modifier
+//                        .background(MaterialTheme.colorScheme.background)
+//                        .windowInsetsPadding(WindowInsets.safeDrawing)
+//                        .padding(8.dp)
+//                )
+
+                ScheduleContent(
                     modifier = Modifier
                         .background(MaterialTheme.colorScheme.background)
                         .windowInsetsPadding(WindowInsets.safeDrawing)
-                        .padding(8.dp)
-
-
                 )
             }
         }
