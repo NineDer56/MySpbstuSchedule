@@ -1,6 +1,7 @@
 package com.example.myspbstuschedule.presentation.screens.selection
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,7 +19,8 @@ import com.example.myspbstuschedule.ui.theme.MySpbstuScheduleTheme
 
 @Composable
 fun TeacherItem(
-    teacher : Teacher
+    teacher : Teacher,
+    onTeacherItemClick : (teacherId : Int) -> Unit
 ){
     Column(
         modifier = Modifier
@@ -26,6 +28,9 @@ fun TeacherItem(
             .background(MaterialTheme.colorScheme.surfaceContainer)
             .fillMaxWidth()
             .padding(8.dp)
+            .clickable {
+                onTeacherItemClick(teacher.id)
+            }
     ) {
         Text(
             text = teacher.name,
@@ -55,7 +60,8 @@ fun TeacherItemPreview(){
                1,
                 "Хахина Анна Михайловна",
                 "51/03 Высшая школа программной инженерии"
-            )
+            ),
+            {}
         )
     }
 }

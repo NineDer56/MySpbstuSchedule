@@ -16,19 +16,27 @@ fun SelectionContentItems(
     modifier: Modifier = Modifier,
     mode: SearchMode,
     teachers: List<Teacher> = emptyList(),
-    groups: List<Group> = emptyList()
+    groups: List<Group> = emptyList(),
+    onGroupItemClick: (groupId: Int) -> Unit,
+    onTeacherItemClick: (teacherId: Int) -> Unit
 ) {
     LazyColumn(
         modifier = modifier
     ) {
         if (mode == SearchMode.GROUP) {
             items(items = groups, key = { it.id }) { group ->
-                GroupItem(group)
+                GroupItem(
+                    group = group,
+                    onGroupItemClick = onGroupItemClick
+                )
                 Spacer(modifier = Modifier.padding(4.dp))
             }
         } else if (mode == SearchMode.TEACHER) {
             items(items = teachers, key = { it.id }) { teacher ->
-                TeacherItem(teacher)
+                TeacherItem(
+                    teacher = teacher,
+                    onTeacherItemClick = onTeacherItemClick
+                )
                 Spacer(modifier = Modifier.padding(4.dp))
             }
         }

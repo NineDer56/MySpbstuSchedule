@@ -19,7 +19,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 fun SelectionScreen(
-    contentPadding: PaddingValues
+    contentPadding: PaddingValues,
+    onGroupItemClick : (groupId : Int) -> Unit,
+    onTeacherItemClick : (teacherId : Int) -> Unit
 ) {
     val viewModel: SelectionViewModel = hiltViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -70,7 +72,9 @@ fun SelectionScreen(
                             .fillMaxSize(),
                         mode = currentState.mode,
                         groups = currentState.groups,
-                        teachers = currentState.teachers
+                        teachers = currentState.teachers,
+                        onGroupItemClick = onGroupItemClick,
+                        onTeacherItemClick = onTeacherItemClick
                     )
                 }
             }

@@ -1,6 +1,7 @@
 package com.example.myspbstuschedule.presentation.screens.selection
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,7 +20,8 @@ import com.example.myspbstuschedule.ui.theme.MySpbstuScheduleTheme
 
 @Composable
 fun GroupItem(
-    group :  Group
+    group :  Group,
+    onGroupItemClick : (groupId : Int) -> Unit
 ){
     Column(
         modifier = Modifier
@@ -27,6 +29,7 @@ fun GroupItem(
             .background(MaterialTheme.colorScheme.surfaceContainer)
             .fillMaxWidth()
             .padding(8.dp)
+            .clickable { onGroupItemClick(group.id) }
     ) {
         Text(
             text = group.name,
@@ -61,7 +64,8 @@ fun GroupItemPreview(){
                     "Интитут компьютерных наук и кибербезопасности",
                     "ИКНК"
                 )
-            )
+            ),
+            {}
         )
     }
 }

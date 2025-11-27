@@ -12,14 +12,18 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.myspbstuschedule.presentation.screens.selection.SearchMode
 
 @Composable
 fun ScheduleScreen(
-    contentPadding: PaddingValues
+    contentPadding: PaddingValues,
+    id : Int,
+    mode : SearchMode
 ) {
 
     val viewModel: ScheduleViewModel = hiltViewModel()
