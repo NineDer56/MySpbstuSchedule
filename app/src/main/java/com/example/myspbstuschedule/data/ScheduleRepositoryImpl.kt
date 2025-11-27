@@ -8,11 +8,9 @@ import com.example.myspbstuschedule.domain.model.Group
 import com.example.myspbstuschedule.domain.model.Schedule
 import com.example.myspbstuschedule.domain.model.Teacher
 import com.example.myspbstuschedule.domain.repository.ScheduleRepository
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 

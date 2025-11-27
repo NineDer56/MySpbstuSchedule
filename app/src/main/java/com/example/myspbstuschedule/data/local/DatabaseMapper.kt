@@ -1,7 +1,6 @@
 package com.example.myspbstuschedule.data.local
 
 import com.example.myspbstuschedule.data.local.entity.FacultyEntity
-import com.example.myspbstuschedule.data.local.entity.GroupEntity
 import com.example.myspbstuschedule.data.local.pojo.GroupWithFaculty
 import com.example.myspbstuschedule.domain.model.Faculty
 import com.example.myspbstuschedule.domain.model.Group
