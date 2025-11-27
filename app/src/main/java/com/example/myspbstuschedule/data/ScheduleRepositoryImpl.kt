@@ -37,7 +37,12 @@ class ScheduleRepositoryImpl @Inject constructor(
     }
 
     override fun getTeachers(name: String): Flow<List<Teacher>> {
-        TODO("Not yet implemented")
+        return flow{
+            val teachers = withContext(Dispatchers.IO){
+                networkApi.getTeachers(name).teachers.map {networkMapper.mapTeacherNwModelToEntity(it)}
+            }
+            emit(teachers)
+        }
     }
 
     override fun getTeacherSchedule(teacherId: Int, date: String): Flow<Schedule> {
