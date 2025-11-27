@@ -1,6 +1,8 @@
 package com.example.myspbstuschedule.presentation.screens.selection
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
@@ -17,16 +19,17 @@ fun SelectionContentItems(
     groups: List<Group> = emptyList()
 ) {
     LazyColumn(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        modifier = modifier
     ) {
         if (mode == SearchMode.GROUP) {
             items(items = groups, key = { it.id }) { group ->
                 GroupItem(group)
+                Spacer(modifier = Modifier.padding(4.dp))
             }
         } else if (mode == SearchMode.TEACHER) {
             items(items = teachers, key = { it.id }) { teacher ->
                 TeacherItem(teacher)
+                Spacer(modifier = Modifier.padding(4.dp))
             }
         }
     }

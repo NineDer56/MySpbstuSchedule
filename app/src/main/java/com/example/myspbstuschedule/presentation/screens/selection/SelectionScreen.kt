@@ -72,7 +72,6 @@ fun SelectionScreen(
                         groups = currentState.groups,
                         teachers = currentState.teachers
                     )
-                    // TODO Добавить отступ снизу
                 }
             }
         }
