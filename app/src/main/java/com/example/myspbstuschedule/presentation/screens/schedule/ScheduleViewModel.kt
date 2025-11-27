@@ -16,24 +16,21 @@ class ScheduleViewModel @Inject constructor(
     private val getTeacherScheduleUseCase: GetTeacherScheduleUseCase,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow<ScheduleState>(ScheduleState.Initial)
+    private val _state = MutableStateFlow<ScheduleState>(ScheduleState.Loading)
     val state = _state.asStateFlow()
 
-
-
-
-    fun get7DaysOfWeek(offset : Int = 0) : List<LocalDate> {
+    fun get7DaysOfWeek(offset: Int = 0): List<LocalDate> {
         val date = LocalDate.now().plusWeeks(offset.toLong())
         Log.d("Test", "date $date")
 
         val dayOfWeek = date.dayOfWeek.value
         Log.d("Test", "dayOfWeek $dayOfWeek")
 
-        val mondayDate = if(dayOfWeek != 1) date.minusDays((dayOfWeek - 1).toLong()) else date
+        val mondayDate = if (dayOfWeek != 1) date.minusDays((dayOfWeek - 1).toLong()) else date
         Log.d("Test", "mondayDate $mondayDate")
 
         val dates = mutableListOf<LocalDate>().apply {
-            repeat(7){
+            repeat(7) {
                 add(mondayDate.plusDays(it.toLong()))
                 Log.d("Test", " dates  ${mondayDate.plusDays(it.toLong())}")
             }

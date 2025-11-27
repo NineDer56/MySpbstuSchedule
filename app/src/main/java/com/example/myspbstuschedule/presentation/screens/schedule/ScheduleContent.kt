@@ -5,11 +5,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
@@ -31,19 +29,12 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.toLowerCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.myspbstuschedule.domain.model.Auditory
-import com.example.myspbstuschedule.domain.model.Building
-import com.example.myspbstuschedule.domain.model.Lesson
-import com.example.myspbstuschedule.domain.model.LessonType
-import com.example.myspbstuschedule.domain.model.Teacher
 import com.example.myspbstuschedule.ui.theme.MySpbstuScheduleTheme
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.util.Locale
 import kotlin.math.max
 import kotlin.math.min
 
@@ -51,17 +42,21 @@ import kotlin.math.min
 private const val INITIAL_PAGE = Int.MAX_VALUE / 2
 private const val PAGE_COUNT = Int.MAX_VALUE
 
-
 @Composable
 fun ScheduleContent(
     modifier: Modifier = Modifier,
-    dates : List<LocalDate>,
-    lessons : List<Lesson>
+    dates: List<LocalDate>,
+    onDateChange: (offset: Int) -> Unit
 ) {
     val horizontalPagerState = rememberPagerState(
         initialPage = INITIAL_PAGE,
         pageCount = { PAGE_COUNT }
     )
+
+    LaunchedEffect(horizontalPagerState) {
+        val offset = horizontalPagerState.currentPage - INITIAL_PAGE
+        onDateChange(offset)
+    }
 
     Column(
         modifier = modifier
@@ -84,7 +79,8 @@ fun ScheduleContent(
             ) {
                 DateAndArrows(
                     pagerState = horizontalPagerState,
-                    dates = dates
+                    dates = dates,
+                    onDateChange = onDateChange
                 )
 
                 Spacer(modifier = Modifier.padding(8.dp))
@@ -100,41 +96,14 @@ fun ScheduleContent(
             }
 
         }
-
-        LazyColumn(
-            modifier = Modifier.padding(horizontal = 8.dp)
-        ) {
-            repeat(4) {
-                item() {
-                    ScheduleItem(
-                        modifier = Modifier.padding(8.dp),
-                        lesson = Lesson(
-                            subject = "Администрирование информационных систем",
-                            timeStart = "12:00",
-                            timeEnd = "13:40",
-                            lessonType = LessonType(1, "Лабораторные", "Лаб"),
-                            groups = emptyList(),
-                            teachers = listOf(Teacher(1, "Брык Иван Юрьевич", "")),
-                            auditories = listOf(
-                                Auditory(
-                                    1,
-                                    "215",
-                                    Building(1, "11-й учебный корпус", "11 к.")
-                                )
-                            )
-                        )
-                    )
-                }
-            }
-        }
-
     }
 }
 
 @Composable
 private fun DateAndArrows(
     pagerState: PagerState,
-    dates : List<LocalDate>
+    dates: List<LocalDate>,
+    onDateChange: (offset: Int) -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
     Row(
@@ -151,6 +120,8 @@ private fun DateAndArrows(
                 coroutineScope.launch {
                     pagerState.animateScrollToPage(prevPage)
                 }
+                val offset = prevPage - INITIAL_PAGE
+                onDateChange(offset)
             }
         ) {
             Icon(
@@ -182,6 +153,8 @@ private fun DateAndArrows(
                 coroutineScope.launch {
                     pagerState.animateScrollToPage(nextPage)
                 }
+                val offset = nextPage - INITIAL_PAGE
+                onDateChange(offset)
             },
         ) {
             Icon(
@@ -217,7 +190,7 @@ fun DaysOfMonth() {
 @Composable
 fun WeekScroller(
     pagerState: PagerState,
-    dates : List<LocalDate>
+    dates: List<LocalDate>
 ) {
 
     LaunchedEffect(pagerState) {
@@ -250,22 +223,23 @@ fun WeekScroller(
 }
 
 
-//@Preview
-//@Composable
-//fun ScheduleContentPreview() {
-//    MySpbstuScheduleTheme(
-//        darkTheme = true
-//    ) {
-//        ScheduleContent(
-//            dates = listOf(
-//                LocalDate.now(),
-//                LocalDate.now().plusDays(1),
-//                LocalDate.now().plusDays(2),
-//                LocalDate.now().plusDays(3),
-//                LocalDate.now().plusDays(4),
-//                LocalDate.now().plusDays(5),
-//                LocalDate.now().plusDays(6),
-//            )
-//        )
-//    }
-//}
+@Preview
+@Composable
+fun ScheduleContentPreview() {
+    MySpbstuScheduleTheme(
+        darkTheme = true
+    ) {
+        ScheduleContent(
+            dates = listOf(
+                LocalDate.now(),
+                LocalDate.now().plusDays(1),
+                LocalDate.now().plusDays(2),
+                LocalDate.now().plusDays(3),
+                LocalDate.now().plusDays(4),
+                LocalDate.now().plusDays(5),
+                LocalDate.now().plusDays(6),
+            ),
+            onDateChange = {}
+        )
+    }
+}

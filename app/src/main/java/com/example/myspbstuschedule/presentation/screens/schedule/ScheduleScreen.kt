@@ -1,9 +1,12 @@
 package com.example.myspbstuschedule.presentation.screens.schedule
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
@@ -23,29 +26,61 @@ fun ScheduleScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
 
 
-    when (val currentState = state) {
-        is ScheduleState.Initial -> {
+    Column(
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
+            .windowInsetsPadding(WindowInsets.safeDrawing)
+            .fillMaxSize()
+    ) {
+        ScheduleContent(
+            modifier = Modifier
+                .padding(contentPadding),
+            dates = viewModel.get7DaysOfWeek(),
+            onDateChange = { offset ->
+                viewModel.get7DaysOfWeek(offset)
+            }
+        )
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .padding(contentPadding)
+        ) {
+            when (val currentState = state) {
+                is ScheduleState.Empty -> {
+                    ScheduleEmpty(
+                        modifier = Modifier
+                            .fillMaxSize()
+                    )
+                }
+
+                is ScheduleState.Loading -> {
+                    ScheduleLoading(
+                        modifier = Modifier
+                            .fillMaxSize()
+                    )
+                }
+
+                is ScheduleState.Content -> {
+                    ScheduleContentItems(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        lessons = currentState.lessons
+                    )
+                }
+
+                is ScheduleState.Error -> {
+                    ScheduleError(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        message = currentState.message
+                    )
+                }
+            }
 
         }
 
-        is ScheduleState.Loading -> {
-
-        }
-
-        is ScheduleState.Content -> {
-            ScheduleContent(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .windowInsetsPadding(WindowInsets.safeDrawing)
-                    .background(MaterialTheme.colorScheme.background)
-                    .padding(contentPadding),
-                dates = currentState.dates,
-                lessons = currentState.lessons
-            )
-        }
-
-        is ScheduleState.Error -> {
-
-        }
     }
+
 }

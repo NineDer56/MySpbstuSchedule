@@ -1,11 +1,10 @@
 package com.example.myspbstuschedule.presentation.screens.schedule
 
 import com.example.myspbstuschedule.domain.model.Lesson
-import java.time.LocalDate
 
 sealed class ScheduleState {
 
-    data object Initial : ScheduleState()
+    data object Empty : ScheduleState()
 
     data object Loading : ScheduleState()
 
@@ -14,7 +13,6 @@ sealed class ScheduleState {
     ) : ScheduleState()
 
     data class Content(
-        val dates: List<LocalDate>,
         val lessons: List<Lesson>
     ) : ScheduleState()
 }
