@@ -17,7 +17,7 @@ fun ScheduleContentItems(
     LazyColumn(
         modifier = modifier
     ) {
-        items(items = lessons, key = { "${it.subject}${it.timeStart}" }) { lesson ->
+        items(items = lessons) { lesson ->
             ScheduleItem(
                 lesson = lesson
             )
