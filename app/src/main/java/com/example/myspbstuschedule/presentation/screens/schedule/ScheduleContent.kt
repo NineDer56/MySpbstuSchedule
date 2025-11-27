@@ -1,7 +1,6 @@
 package com.example.myspbstuschedule.presentation.screens.schedule
 
 import android.util.Log
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,7 +22,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,9 +30,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.toLowerCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,21 +42,29 @@ import com.example.myspbstuschedule.domain.model.LessonType
 import com.example.myspbstuschedule.domain.model.Teacher
 import com.example.myspbstuschedule.ui.theme.MySpbstuScheduleTheme
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.util.Locale
 import kotlin.math.max
 import kotlin.math.min
 
+
+private const val INITIAL_PAGE = Int.MAX_VALUE / 2
+private const val PAGE_COUNT = Int.MAX_VALUE
+
+
 @Composable
 fun ScheduleContent(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    dates : List<LocalDate>,
+    lessons : List<Lesson>
 ) {
     val horizontalPagerState = rememberPagerState(
-        initialPage = Int.MAX_VALUE / 2,
-        pageCount = { Int.MAX_VALUE }
+        initialPage = INITIAL_PAGE,
+        pageCount = { PAGE_COUNT }
     )
 
     Column(
         modifier = modifier
-            .fillMaxSize()
     ) {
         ElevatedCard(
             elevation = CardDefaults.cardElevation(
@@ -78,7 +83,8 @@ fun ScheduleContent(
                 modifier = Modifier.padding(8.dp)
             ) {
                 DateAndArrows(
-                    pagerState = horizontalPagerState
+                    pagerState = horizontalPagerState,
+                    dates = dates
                 )
 
                 Spacer(modifier = Modifier.padding(8.dp))
@@ -88,7 +94,8 @@ fun ScheduleContent(
                 Spacer(modifier = Modifier.padding(8.dp))
 
                 WeekScroller(
-                    pagerState = horizontalPagerState
+                    pagerState = horizontalPagerState,
+                    dates = dates
                 )
             }
 
@@ -127,6 +134,7 @@ fun ScheduleContent(
 @Composable
 private fun DateAndArrows(
     pagerState: PagerState,
+    dates : List<LocalDate>
 ) {
     val coroutineScope = rememberCoroutineScope()
     Row(
@@ -157,12 +165,12 @@ private fun DateAndArrows(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "November",
+                text = dates[0].month.name.lowercase(),
                 fontSize = 24.sp,
                 color = MaterialTheme.colorScheme.primary
             )
             Text(
-                text = "2025",
+                text = dates[0].year.toString(),
                 color = MaterialTheme.colorScheme.onBackground
             )
         }
@@ -208,7 +216,8 @@ fun DaysOfMonth() {
 
 @Composable
 fun WeekScroller(
-    pagerState: PagerState
+    pagerState: PagerState,
+    dates : List<LocalDate>
 ) {
 
     LaunchedEffect(pagerState) {
@@ -226,11 +235,11 @@ fun WeekScroller(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            val dates = listOf("1", "2", "3", "4", "5", "6", "7")
+//            val dates = get7DaysOfWeek(page - INITIAL_PAGE)
 
             dates.forEach {
                 Text(
-                    text = it,
+                    text = it.dayOfMonth.toString(),
                     modifier = Modifier.size(28.dp),
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onBackground
@@ -241,12 +250,22 @@ fun WeekScroller(
 }
 
 
-@Preview
-@Composable
-fun ScheduleContentPreview() {
-    MySpbstuScheduleTheme(
-        darkTheme = true
-    ) {
-        ScheduleContent()
-    }
-}
+//@Preview
+//@Composable
+//fun ScheduleContentPreview() {
+//    MySpbstuScheduleTheme(
+//        darkTheme = true
+//    ) {
+//        ScheduleContent(
+//            dates = listOf(
+//                LocalDate.now(),
+//                LocalDate.now().plusDays(1),
+//                LocalDate.now().plusDays(2),
+//                LocalDate.now().plusDays(3),
+//                LocalDate.now().plusDays(4),
+//                LocalDate.now().plusDays(5),
+//                LocalDate.now().plusDays(6),
+//            )
+//        )
+//    }
+//}
