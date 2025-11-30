@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.example.myspbstuschedule.data.local.DatabaseMapper
 import com.example.myspbstuschedule.data.local.ScheduleDao
 import com.example.myspbstuschedule.data.local.ScheduleDatabase
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,14 +35,20 @@ interface DatabaseModule {
 
         @Singleton
         @Provides
-        fun provideDao(db : ScheduleDatabase) : ScheduleDao{
+        fun provideDao(db: ScheduleDatabase): ScheduleDao {
             return db.dao()
         }
 
         @Singleton
         @Provides
-        fun provideDatabaseMapper() : DatabaseMapper {
-            return DatabaseMapper
+        fun provideDatabaseMapper(gson: Gson): DatabaseMapper {
+            return DatabaseMapper(gson)
+        }
+
+        @Singleton
+        @Provides
+        fun provideGson(): Gson {
+            return Gson()
         }
     }
 }

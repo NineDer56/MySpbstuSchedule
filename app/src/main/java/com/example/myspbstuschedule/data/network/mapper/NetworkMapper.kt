@@ -1,6 +1,5 @@
 package com.example.myspbstuschedule.data.network.mapper
 
-import android.util.Log
 import com.example.myspbstuschedule.data.network.dto.AuditoryNwModel
 import com.example.myspbstuschedule.data.network.dto.BuildingNwModel
 import com.example.myspbstuschedule.data.network.dto.DayNwModel
@@ -23,119 +22,104 @@ import com.example.myspbstuschedule.domain.model.Teacher
 import com.example.myspbstuschedule.domain.model.Week
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-// TODO поменять mapper в extensions
+
 object NetworkMapper {
-    fun mapScheduleNwModelToEntity(nwModel: ScheduleNwModel) : Schedule {
+
+    fun ScheduleNwModel.toDomain(): Schedule {
         return Schedule(
-            week = mapWeekNwModelToEntity(nwModel.week),
-            days = nwModel.days.map { mapDayNwModelToEntity(it) }
+            week = week.toDomain(),
+            days = days.map { it.toDomain() }
         )
     }
 
-    private fun mapWeekNwModelToEntity(nwModel: WeekNwModel) : Week {
+    private fun WeekNwModel.toDomain(): Week {
         return Week(
-            dateStart = nwModel.dateStart,
-            dateEnd = nwModel.dateEnd,
-            idOdd = nwModel.idOdd
+            dateStart = dateStart,
+            dateEnd = dateEnd,
+            idOdd = idOdd
         )
     }
 
-    private fun mapDayNwModelToEntity(nwModel: DayNwModel) : Day {
+    private fun DayNwModel.toDomain(): Day {
         return Day(
-            weekday = nwModel.weekday,
-            date = nwModel.date,
-            lessons = nwModel.lessons.map { mapLessonNwModelToEntity(it) }
+            weekday = weekday,
+            date = date,
+            lessons = lessons.map { it.toDomain() }
         )
     }
 
-    private fun mapLessonNwModelToEntity(nwModel: LessonNwModel) : Lesson {
+    private fun LessonNwModel.toDomain(): Lesson {
         return Lesson(
-            subject = nwModel.subject,
-            timeStart = nwModel.timeStart,
-            timeEnd = nwModel.timeEnd,
-            lessonType = mapLessonTypeNwModelToEntity(nwModel.lessonType),
-            groups = nwModel.groups.map { mapGroupNwModelToEntity(it) },
-            teachers = nwModel.teachers?.map { mapTeacherNwModelToEntity(it) } ?: listOf(Teacher(-1, "Не знаю кто", "")),
-            auditories = nwModel.auditories.map { mapAuditoryNwModelToEntity(it) }
+            subject = subject,
+            timeStart = timeStart,
+            timeEnd = timeEnd,
+            lessonType = lessonType.toDomain(),
+            groups = groups.map { it.toDomain() },
+            teachers = teachers?.map { it.toDomain() } ?: listOf(Teacher(-1, "Не знаю кто", "")),
+            auditories = auditories.map { it.toDomain() }
         )
     }
 
-    private fun mapLessonTypeNwModelToEntity(nwModel: LessonTypeNwModel) : LessonType {
+    private fun LessonTypeNwModel.toDomain(): LessonType {
         return LessonType(
-            id = nwModel.id,
-            name = nwModel.name,
-            abbr = nwModel.abbr
+            id = id,
+            name = name,
+            abbr = abbr
         )
     }
 
-    fun mapGroupNwModelToEntity(nwModel: GroupNwModel) : Group {
+    fun GroupNwModel.toDomain(): Group {
         return Group(
-            id = nwModel.id,
-            name = nwModel.name,
-            faculty = mapFacultyNwModelToEntity(nwModel.faculty),
-            level = nwModel.level
+            id = id,
+            name = name,
+            faculty = faculty.toDomain(),
+            level = level
         )
     }
 
-    private fun mapFacultyNwModelToEntity(nwModel: FacultyNwModel) : Faculty {
+    private fun FacultyNwModel.toDomain(): Faculty {
         return Faculty(
-            id = nwModel.id,
-            name = nwModel.name,
-            abbr = nwModel.abbr
+            id = id,
+            name = name,
+            abbr = abbr
         )
     }
 
-    fun mapTeacherNwModelToEntity(nwModel : TeacherNwModel) : Teacher{
+    fun TeacherNwModel.toDomain(): Teacher {
         return Teacher(
-            id = nwModel.id,
-            name = nwModel.name,
-            chair = nwModel.chair
+            id = id,
+            name = name,
+            chair = chair
         )
     }
 
-    private fun mapAuditoryNwModelToEntity(nwModel: AuditoryNwModel) : Auditory {
+    private fun AuditoryNwModel.toDomain(): Auditory {
         return Auditory(
-            id = nwModel.id,
-            name = nwModel.name,
-            building = mapBuildingNwModelToEntity(nwModel.building)
+            id = id,
+            name = name,
+            building = building.toDomain()
         )
     }
 
-    private fun mapBuildingNwModelToEntity(nwModel: BuildingNwModel) : Building {
+    private fun BuildingNwModel.toDomain(): Building {
         return Building(
-            id = nwModel.id,
-            name = nwModel.name,
-            abbr = nwModel.abbr
+            id = id,
+            name = name,
+            abbr = abbr
         )
     }
 
-    // TODO(Сейчас в бд вроде как сохраняется, но надо нормализовать патеррны даты, т.к. для запроса к апи нужен один формат, а возвращает апи другой)
-    fun LocalDate.toApiRequest() : String{
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        val formatted = this.format(formatter)
-        return formatted
-    }
-
-    fun String.toApiRequest() : String{
+    fun String.toApiRequest(): String {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         val date = LocalDate.parse(this)
         val formatted = date.format(formatter)
-        Log.d("Test","String.toApiRequest $formatted")
         return formatted
     }
 
-    fun LocalDate.toDbRequest() : String{
-        val formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
-        val formatted = this.format(formatter)
-        return formatted
-    }
-
-    fun String.toDbRequest() : String{
-
+    fun String.toDbRequest(): String {
         val formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
         val date = LocalDate.parse(this)
         val formatted = date.format(formatter)
-        Log.d("Test", "String.toDbRequest() $formatted")
         return formatted
     }
 }
