@@ -51,6 +51,8 @@ import kotlin.math.min
 private const val INITIAL_PAGE = Int.MAX_VALUE / 2
 private const val PAGE_COUNT = Int.MAX_VALUE
 
+private val days = listOf("ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС")
+
 @Composable
 fun ScheduleContent(
     modifier: Modifier = Modifier,
@@ -164,7 +166,7 @@ private fun DateAndArrows(
         IconButton(
             modifier = Modifier.size(48.dp),
             onClick = {
-                val nextPage = min(pagerState.currentPage + 1, pagerState.pageCount)
+                val nextPage = min(pagerState.currentPage + 1, pagerState.pageCount - 1)
                 coroutineScope.launch {
                     pagerState.animateScrollToPage(nextPage)
                 }
@@ -187,8 +189,6 @@ fun DaysOfMonth() {
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        val days = listOf("ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС")
-
         days.forEach {
             Text(
                 text = it,
