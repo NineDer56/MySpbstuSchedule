@@ -35,6 +35,7 @@ fun ScheduleScreen(
             modifier = Modifier
                 .padding(contentPadding),
             dates = state.weekDays,
+            selectedDay = state.selectedDayOfWeek,
             onDateChange = { offset ->
                 viewModel.get7DaysOfWeek(offset)
                 viewModel.getSchedule()

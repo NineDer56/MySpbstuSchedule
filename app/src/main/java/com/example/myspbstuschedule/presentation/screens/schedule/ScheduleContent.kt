@@ -1,8 +1,12 @@
 package com.example.myspbstuschedule.presentation.screens.schedule
 
 import android.util.Log
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowLeft
@@ -25,10 +30,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -47,8 +55,9 @@ private const val PAGE_COUNT = Int.MAX_VALUE
 fun ScheduleContent(
     modifier: Modifier = Modifier,
     dates: List<LocalDate>,
+    selectedDay: Int,
     onDateChange: (offset: Int) -> Unit,
-    onDayOfWeekClick : (dayOfWeek : Int) -> Unit
+    onDayOfWeekClick: (dayOfWeek: Int) -> Unit
 ) {
     val horizontalPagerState = rememberPagerState(
         initialPage = INITIAL_PAGE,
@@ -99,6 +108,7 @@ fun ScheduleContent(
                 WeekScroller(
                     pagerState = horizontalPagerState,
                     dates = dates,
+                    selectedDay = selectedDay,
                     onDayOfWeekClick = onDayOfWeekClick
                 )
             }
@@ -194,6 +204,7 @@ fun DaysOfMonth() {
 fun WeekScroller(
     pagerState: PagerState,
     dates: List<LocalDate>,
+    selectedDay: Int,
     onDayOfWeekClick: (dayOfWeek: Int) -> Unit
 ) {
     HorizontalPager(
@@ -203,18 +214,31 @@ fun WeekScroller(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-//            val dates = get7DaysOfWeek(page - INITIAL_PAGE)
-
             dates.forEach {
-                Text(
-                    text = it.dayOfMonth.toString(),
-                    modifier = Modifier
-                        .size(28.dp)
-                        .clickable { onDayOfWeekClick(it.dayOfWeek.value) }
-                    ,
-                    textAlign = TextAlign.Center,
-                    color = MaterialTheme.colorScheme.onBackground
+                val dayOfWeek = it.dayOfWeek.value
+                val isSelected = selectedDay == dayOfWeek
+
+                val selectedDayColor by animateColorAsState(
+                    targetValue = if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent,
+                    animationSpec = tween(durationMillis = 400)
                 )
+
+                Box(
+                    modifier = Modifier
+                        .size(32.dp)
+                        .clip(CircleShape)
+                        .background(selectedDayColor)
+                        .clickable {
+                            onDayOfWeekClick(dayOfWeek)
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = it.dayOfMonth.toString(),
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+                }
             }
         }
     }
@@ -238,7 +262,8 @@ fun ScheduleContentPreview() {
                 LocalDate.now().plusDays(6),
             ),
             onDateChange = {},
-            onDayOfWeekClick = {}
+            onDayOfWeekClick = {},
+            selectedDay = 3
         )
     }
 }
