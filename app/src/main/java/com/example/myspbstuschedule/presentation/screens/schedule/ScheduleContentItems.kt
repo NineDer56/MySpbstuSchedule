@@ -12,7 +12,7 @@ import com.example.myspbstuschedule.domain.model.Lesson
 @Composable
 fun ScheduleContentItems(
     modifier: Modifier = Modifier,
-    lessons: List<Lesson>
+    lessons : List<Lesson>
 ) {
     LazyColumn(
         modifier = modifier

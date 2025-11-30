@@ -1,6 +1,7 @@
 package com.example.myspbstuschedule.presentation.screens.schedule
 
 import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -46,7 +47,8 @@ private const val PAGE_COUNT = Int.MAX_VALUE
 fun ScheduleContent(
     modifier: Modifier = Modifier,
     dates: List<LocalDate>,
-    onDateChange: (offset: Int) -> Unit
+    onDateChange: (offset: Int) -> Unit,
+    onDayOfWeekClick : (dayOfWeek : Int) -> Unit
 ) {
     val horizontalPagerState = rememberPagerState(
         initialPage = INITIAL_PAGE,
@@ -54,9 +56,15 @@ fun ScheduleContent(
     )
 
     LaunchedEffect(horizontalPagerState) {
-        val offset = horizontalPagerState.currentPage - INITIAL_PAGE
-        onDateChange(offset)
+        snapshotFlow {
+            horizontalPagerState.currentPage
+        }.collect { page ->
+            val offset = page - INITIAL_PAGE
+            onDateChange(offset)
+            Log.d("DateTest", "offset in launched effect: $offset, current: ${page}")
+        }
     }
+
 
     Column(
         modifier = modifier
@@ -79,8 +87,7 @@ fun ScheduleContent(
             ) {
                 DateAndArrows(
                     pagerState = horizontalPagerState,
-                    dates = dates,
-                    onDateChange = onDateChange
+                    dates = dates
                 )
 
                 Spacer(modifier = Modifier.padding(8.dp))
@@ -91,7 +98,8 @@ fun ScheduleContent(
 
                 WeekScroller(
                     pagerState = horizontalPagerState,
-                    dates = dates
+                    dates = dates,
+                    onDayOfWeekClick = onDayOfWeekClick
                 )
             }
 
@@ -102,8 +110,7 @@ fun ScheduleContent(
 @Composable
 private fun DateAndArrows(
     pagerState: PagerState,
-    dates: List<LocalDate>,
-    onDateChange: (offset: Int) -> Unit
+    dates: List<LocalDate>
 ) {
     val coroutineScope = rememberCoroutineScope()
     Row(
@@ -120,8 +127,6 @@ private fun DateAndArrows(
                 coroutineScope.launch {
                     pagerState.animateScrollToPage(prevPage)
                 }
-                val offset = prevPage - INITIAL_PAGE
-                onDateChange(offset)
             }
         ) {
             Icon(
@@ -153,8 +158,6 @@ private fun DateAndArrows(
                 coroutineScope.launch {
                     pagerState.animateScrollToPage(nextPage)
                 }
-                val offset = nextPage - INITIAL_PAGE
-                onDateChange(offset)
             },
         ) {
             Icon(
@@ -190,17 +193,9 @@ fun DaysOfMonth() {
 @Composable
 fun WeekScroller(
     pagerState: PagerState,
-    dates: List<LocalDate>
+    dates: List<LocalDate>,
+    onDayOfWeekClick: (dayOfWeek: Int) -> Unit
 ) {
-
-    LaunchedEffect(pagerState) {
-        snapshotFlow {
-            pagerState.currentPage
-        }.collect { page ->
-            Log.d("Test", page.toString())
-        }
-    }
-
     HorizontalPager(
         state = pagerState,
     ) { page ->
@@ -213,7 +208,10 @@ fun WeekScroller(
             dates.forEach {
                 Text(
                     text = it.dayOfMonth.toString(),
-                    modifier = Modifier.size(28.dp),
+                    modifier = Modifier
+                        .size(28.dp)
+                        .clickable { onDayOfWeekClick(it.dayOfWeek.value) }
+                    ,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onBackground
                 )
@@ -239,7 +237,8 @@ fun ScheduleContentPreview() {
                 LocalDate.now().plusDays(5),
                 LocalDate.now().plusDays(6),
             ),
-            onDateChange = {}
+            onDateChange = {},
+            onDayOfWeekClick = {}
         )
     }
 }

@@ -29,11 +29,9 @@ fun MainScreen() {
             )
         },
 
-        scheduleScreen = { mode, id ->
+        scheduleScreen = {
             ScheduleScreen(
-                contentPadding = PaddingValues(start = 8.dp, end = 8.dp, top = 8.dp),
-                id = id,
-                mode = mode
+                contentPadding = PaddingValues(start = 8.dp, end = 8.dp, top = 8.dp)
             )
         }
     )

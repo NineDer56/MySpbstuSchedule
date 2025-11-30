@@ -1,5 +1,6 @@
 package com.example.myspbstuschedule.data.network.mapper
 
+import android.util.Log
 import com.example.myspbstuschedule.data.network.dto.AuditoryNwModel
 import com.example.myspbstuschedule.data.network.dto.BuildingNwModel
 import com.example.myspbstuschedule.data.network.dto.DayNwModel
@@ -20,7 +21,9 @@ import com.example.myspbstuschedule.domain.model.LessonType
 import com.example.myspbstuschedule.domain.model.Schedule
 import com.example.myspbstuschedule.domain.model.Teacher
 import com.example.myspbstuschedule.domain.model.Week
-
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+// TODO поменять mapper в extensions
 object NetworkMapper {
     fun mapScheduleNwModelToEntity(nwModel: ScheduleNwModel) : Schedule {
         return Schedule(
@@ -104,5 +107,35 @@ object NetworkMapper {
             name = nwModel.name,
             abbr = nwModel.abbr
         )
+    }
+
+    // TODO(Сейчас в бд вроде как сохраняется, но надо нормализовать патеррны даты, т.к. для запроса к апи нужен один формат, а возвращает апи другой)
+    fun LocalDate.toApiRequest() : String{
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        val formatted = this.format(formatter)
+        return formatted
+    }
+
+    fun String.toApiRequest() : String{
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        val date = LocalDate.parse(this)
+        val formatted = date.format(formatter)
+        Log.d("Test","String.toApiRequest $formatted")
+        return formatted
+    }
+
+    fun LocalDate.toDbRequest() : String{
+        val formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
+        val formatted = this.format(formatter)
+        return formatted
+    }
+
+    fun String.toDbRequest() : String{
+
+        val formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
+        val date = LocalDate.parse(this)
+        val formatted = date.format(formatter)
+        Log.d("Test", "String.toDbRequest() $formatted")
+        return formatted
     }
 }

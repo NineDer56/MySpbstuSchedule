@@ -1,18 +1,21 @@
 package com.example.myspbstuschedule.presentation.screens.schedule
 
 import com.example.myspbstuschedule.domain.model.Lesson
+import com.example.myspbstuschedule.domain.model.Schedule
+import java.time.LocalDate
 
-sealed class ScheduleState {
+data class ScheduleState(
+    val isLoading : Boolean = false,
+    val error : String? = null,
+    val selectedDayOfWeek : Int = LocalDate.now().dayOfWeek.value,
+    val weekDays : List<LocalDate> = emptyList(),
+    val schedule: Schedule? = null
+) {
+    val currentLessons : List<Lesson>
+        get() = schedule
+            ?.days
+            ?.firstOrNull { it.weekday == selectedDayOfWeek }
+            ?.lessons
+            .orEmpty()
 
-    data object Empty : ScheduleState()
-
-    data object Loading : ScheduleState()
-
-    data class Error(
-        val message: String
-    ) : ScheduleState()
-
-    data class Content(
-        val lessons: List<Lesson>
-    ) : ScheduleState()
 }

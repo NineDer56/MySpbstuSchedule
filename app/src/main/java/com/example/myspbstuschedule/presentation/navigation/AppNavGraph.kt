@@ -12,10 +12,10 @@ import com.example.myspbstuschedule.presentation.screens.selection.SearchMode
 @Composable
 fun AppNavGraph(
     modifier: Modifier = Modifier,
-    navHostController : NavHostController,
-    selectionScreen : @Composable () -> Unit,
-    scheduleScreen : @Composable (mode : SearchMode, id : Int) -> Unit,
-){
+    navHostController: NavHostController,
+    selectionScreen: @Composable () -> Unit,
+    scheduleScreen: @Composable () -> Unit,
+) {
     NavHost(
         modifier = modifier,
         navController = navHostController,
@@ -29,17 +29,17 @@ fun AppNavGraph(
         composable(
             route = Routes.Schedule.route,
             arguments = listOf(
-                navArgument(Routes.KEY_MODE) {type = NavType.StringType},
-                navArgument(Routes.KEY_ID) {type = NavType.IntType}
+                navArgument(Routes.KEY_MODE) { type = NavType.StringType },
+                navArgument(Routes.KEY_ID) { type = NavType.IntType }
             )
-        ){ navBackStackEntry ->
+        ) { navBackStackEntry ->
             val modeArg = navBackStackEntry.arguments?.getString(Routes.KEY_MODE)
             val mode = modeArg?.let {
                 SearchMode.valueOf(it)
-            }  ?: SearchMode.GROUP
+            } ?: SearchMode.GROUP
 
             val id = navBackStackEntry.arguments?.getInt(Routes.KEY_ID) ?: 0
-            scheduleScreen(mode, id)
+            scheduleScreen()
         }
     }
 
