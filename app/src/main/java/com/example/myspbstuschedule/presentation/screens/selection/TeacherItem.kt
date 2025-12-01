@@ -20,7 +20,7 @@ import com.example.myspbstuschedule.ui.theme.MySpbstuScheduleTheme
 @Composable
 fun TeacherItem(
     teacher : Teacher,
-    onTeacherItemClick : (teacherId : Int) -> Unit
+    onTeacherItemClick : (teacherId : Int, name : String) -> Unit
 ){
     Column(
         modifier = Modifier
@@ -29,7 +29,7 @@ fun TeacherItem(
             .fillMaxWidth()
             .padding(8.dp)
             .clickable {
-                onTeacherItemClick(teacher.id)
+                onTeacherItemClick(teacher.id, teacher.name)
             }
     ) {
         Text(
@@ -61,7 +61,7 @@ fun TeacherItemPreview(){
                 "Хахина Анна Михайловна",
                 "51/03 Высшая школа программной инженерии"
             ),
-            {}
+            {a, b ->}
         )
     }
 }

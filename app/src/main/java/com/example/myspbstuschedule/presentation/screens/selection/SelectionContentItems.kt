@@ -16,8 +16,8 @@ fun SelectionContentItems(
     mode: SearchMode,
     teachers: List<Teacher> = emptyList(),
     groups: List<Group> = emptyList(),
-    onGroupItemClick: (groupId: Int) -> Unit,
-    onTeacherItemClick: (teacherId: Int) -> Unit
+    onGroupItemClick: (groupId: Int, name : String) -> Unit,
+    onTeacherItemClick: (teacherId: Int, name : String) -> Unit
 ) {
     LazyColumn(
         modifier = modifier

@@ -14,14 +14,13 @@ import javax.inject.Inject
 @HiltViewModel
 class SelectionViewModel @Inject constructor(
     private val getGroupsUseCase: GetGroupsUseCase,
-    private val getTeachersUseCase: GetTeachersUseCase
+    private val getTeachersUseCase: GetTeachersUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<SelectionState>(SelectionState.Initial)
     val state = _state.asStateFlow()
 
-    private var searchJob : Job? = null
-
+    private var searchJob: Job? = null
 
     fun search(name: String, mode: SearchMode) {
         _state.value = SelectionState.Loading

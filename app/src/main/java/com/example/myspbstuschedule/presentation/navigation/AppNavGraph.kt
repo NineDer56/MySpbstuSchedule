@@ -7,7 +7,6 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.myspbstuschedule.presentation.screens.selection.SearchMode
 
 @Composable
 fun AppNavGraph(
@@ -32,13 +31,7 @@ fun AppNavGraph(
                 navArgument(Routes.KEY_MODE) { type = NavType.StringType },
                 navArgument(Routes.KEY_ID) { type = NavType.IntType }
             )
-        ) { navBackStackEntry ->
-            val modeArg = navBackStackEntry.arguments?.getString(Routes.KEY_MODE)
-            val mode = modeArg?.let {
-                SearchMode.valueOf(it)
-            } ?: SearchMode.GROUP
-
-            val id = navBackStackEntry.arguments?.getInt(Routes.KEY_ID) ?: 0
+        ) {
             scheduleScreen()
         }
     }

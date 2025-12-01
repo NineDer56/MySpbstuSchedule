@@ -21,7 +21,7 @@ import com.example.myspbstuschedule.ui.theme.MySpbstuScheduleTheme
 @Composable
 fun GroupItem(
     group :  Group,
-    onGroupItemClick : (groupId : Int) -> Unit
+    onGroupItemClick : (groupId : Int, name : String) -> Unit
 ){
     Column(
         modifier = Modifier
@@ -29,7 +29,7 @@ fun GroupItem(
             .background(MaterialTheme.colorScheme.surfaceContainer)
             .fillMaxWidth()
             .padding(8.dp)
-            .clickable { onGroupItemClick(group.id) }
+            .clickable { onGroupItemClick(group.id, group.name) }
     ) {
         Text(
             text = group.name,
@@ -65,7 +65,7 @@ fun GroupItemPreview(){
                     "ИКНК"
                 )
             ),
-            {}
+            {a, b ->},
         )
     }
 }

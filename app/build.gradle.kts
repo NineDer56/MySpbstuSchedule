@@ -93,4 +93,9 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     // Test helpers
     testImplementation(libs.androidx.room.testing)
+
+    // Datastore
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.datastore.preferences.core)
+
 }

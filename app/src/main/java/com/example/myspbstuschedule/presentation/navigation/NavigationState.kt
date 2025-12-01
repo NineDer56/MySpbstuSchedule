@@ -11,15 +11,18 @@ class NavigationState(
     val navHostController: NavHostController
 ) {
 
-    fun navigateToSchedule(mode : SearchMode, id : Int){
-        navHostController.navigate(Routes.Schedule.getRoute(mode, id))
+    fun navigateToSchedule(mode: SearchMode, id: Int) {
+        navHostController.navigate(Routes.Schedule.getRoute(mode, id)) {
+            launchSingleTop = true
+            popUpTo(Routes.ROUTE_SELECTION)
+        }
     }
 }
 
 @Composable
 fun rememberNavigationState(
     navHostController: NavHostController = rememberNavController()
-) : NavigationState{
+): NavigationState {
     return remember(navHostController) {
         NavigationState(navHostController)
     }
