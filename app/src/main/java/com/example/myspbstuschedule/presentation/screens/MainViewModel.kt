@@ -48,4 +48,11 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun clearSelection() {
+        viewModelScope.launch {
+            settingsDataStore.resetLastSelectedGroup()
+            settingsDataStore.resetLastSelectedTeacher()
+        }
+    }
+
 }
