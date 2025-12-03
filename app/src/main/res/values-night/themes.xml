@@ -4,7 +4,7 @@
     <style name="Theme.MySpbstuSchedule" parent="android:Theme.Material.Light.NoActionBar" />
 
     <style name="Theme.MySpbstuSchedule.Splash" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/light_splash_bg</item>
+        <item name="windowSplashScreenBackground">@color/dark_splash_bg</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/spbstu_logo_splash</item>
         <item name="postSplashScreenTheme">@style/Theme.MySpbstuSchedule</item>
     </style>

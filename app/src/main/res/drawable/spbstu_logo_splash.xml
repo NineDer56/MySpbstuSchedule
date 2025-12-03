@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Можно задать фон, если нужно -->
+    <!--
+    <item android:drawable="@color/light_splash_bg" />
+    -->
+
+    <!-- Сам логотип с размерами и центровкой -->
+    <item
+        android:drawable="@drawable/text_logo"
+        android:gravity="center"
+        android:width="96dp"
+        android:height="32dp" />
+</layer-list>

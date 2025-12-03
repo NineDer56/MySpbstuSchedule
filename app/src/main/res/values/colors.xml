@@ -7,4 +7,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="green_dark_splash_bg">#FF29B91B</color>
+    <color name="green_light_splash_bg">#FF2AD018</color>
+
+    <color name="dark_splash_bg">#FF343434</color>
+    <color name="light_splash_bg">#FFE5E5E5</color>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.myspbstuschedule.presentation.screens
+package com.example.myspbstuschedule.presentation.screens.mainScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,8 +7,10 @@ import com.example.myspbstuschedule.data.datastore.SettingsDataStore
 import com.example.myspbstuschedule.presentation.screens.selection.SearchMode
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -20,6 +22,14 @@ class MainViewModel @Inject constructor(
 
     private val _selectedNameState = MutableStateFlow<String>("")
     val selectedNameState = _selectedNameState.asStateFlow()
+
+    private val _isLoadingState = MutableStateFlow(false)
+    val isLoadingState = _isLoadingState.asStateFlow()
+
+    suspend fun checkLastSelection() : Boolean {
+        return getLastSelection() != null
+    }
+
 
     suspend fun getLastSelection(): SavedSettings? {
         val result = withContext(Dispatchers.IO) {

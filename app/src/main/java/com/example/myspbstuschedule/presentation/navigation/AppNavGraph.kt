@@ -11,6 +11,7 @@ import androidx.navigation.navArgument
 @Composable
 fun AppNavGraph(
     modifier: Modifier = Modifier,
+    startDestination : String,
     navHostController: NavHostController,
     selectionScreen: @Composable () -> Unit,
     scheduleScreen: @Composable () -> Unit,
@@ -18,7 +19,7 @@ fun AppNavGraph(
     NavHost(
         modifier = modifier,
         navController = navHostController,
-        startDestination = Routes.Selection.route
+        startDestination = startDestination
     ) {
 
         composable(Routes.Selection.route) {

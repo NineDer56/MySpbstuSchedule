@@ -1,4 +1,4 @@
-package com.example.myspbstuschedule.presentation.screens
+package com.example.myspbstuschedule.presentation.screens.mainScreen
 
 import android.util.Log
 import androidx.compose.foundation.layout.Column
@@ -36,7 +36,9 @@ import com.example.myspbstuschedule.presentation.screens.selection.SearchMode
 import com.example.myspbstuschedule.presentation.screens.selection.SelectionScreen
 
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    startDestination : String
+) {
 
     val viewModel: MainViewModel = hiltViewModel()
     val navigationState = rememberNavigationState()
@@ -88,6 +90,8 @@ fun MainScreen() {
             modifier = Modifier
                 .consumeWindowInsets(paddingValues)
                 .padding(paddingValues),
+
+            startDestination = startDestination,
 
             navHostController = navigationState.navHostController,
 
