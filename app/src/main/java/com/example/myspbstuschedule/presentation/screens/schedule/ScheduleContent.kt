@@ -44,6 +44,8 @@ import androidx.compose.ui.unit.sp
 import com.example.myspbstuschedule.ui.theme.MySpbstuScheduleTheme
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 import kotlin.math.max
 import kotlin.math.min
 
@@ -153,7 +155,7 @@ private fun DateAndArrows(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = dates[0].month.name.lowercase(),
+                text = formatMonth(dates[0]),
                 fontSize = 24.sp,
                 color = MaterialTheme.colorScheme.primary
             )
@@ -182,6 +184,11 @@ private fun DateAndArrows(
     }
 }
 
+private fun formatMonth(date : LocalDate) : String{
+    val formatter = DateTimeFormatter.ofPattern("LLLL", Locale("ru"))
+    val formattedDate = date.format(formatter).replaceFirstChar { it.uppercase() }
+    return formattedDate
+}
 
 @Composable
 fun DaysOfMonth() {
