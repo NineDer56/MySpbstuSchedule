@@ -4,7 +4,8 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myspbstuschedule.data.ScheduleRepositoryImpl
+import com.example.myspbstuschedule.domain.usecase.GetGroupsScheduleUseCase
+import com.example.myspbstuschedule.domain.usecase.GetTeachersScheduleUseCase
 import com.example.myspbstuschedule.presentation.navigation.Routes
 import com.example.myspbstuschedule.presentation.screens.selection.SearchMode
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ScheduleViewModel @Inject constructor(
-    private val repository: ScheduleRepositoryImpl,  // TODO убрать, добавить usecase
+    private val getGroupsScheduleUseCase: GetGroupsScheduleUseCase,
+    private val getTeachersScheduleUseCase: GetTeachersScheduleUseCase,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -42,11 +44,11 @@ class ScheduleViewModel @Inject constructor(
                 val schedule = withContext(Dispatchers.IO) {
                     when (mode) {
                         SearchMode.TEACHER.name -> {
-                            repository.getTeachersSchedule(id, currentDate)
+                            getTeachersScheduleUseCase(id, currentDate)
                         }
 
                         SearchMode.GROUP.name -> {
-                            repository.getGroupsSchedule(id, currentDate)
+                            getGroupsScheduleUseCase(id, currentDate)
                         }
 
                         else -> {

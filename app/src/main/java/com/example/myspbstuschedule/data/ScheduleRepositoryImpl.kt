@@ -36,7 +36,7 @@ class ScheduleRepositoryImpl @Inject constructor(
         }
     }
 
-    suspend fun getGroupsSchedule(id: Int, date: String): Schedule {
+    override suspend fun getGroupsSchedule(id: Int, date: String): Schedule {
 
         val cached = dao.getSchedule(SearchMode.GROUP.name, id, date.toDbRequest())
         Log.d("Test", "repo getGroupSchedule cached: $cached")
@@ -58,7 +58,7 @@ class ScheduleRepositoryImpl @Inject constructor(
         return schedule
     }
 
-    suspend fun getTeachersSchedule(id: Int, date: String): Schedule {
+    override suspend fun getTeachersSchedule(id: Int, date: String): Schedule {
 
         val cached = dao.getSchedule(SearchMode.TEACHER.name, id, date.toDbRequest())
         Log.d("Test", "repo getTeachersSchedule cached: $cached")

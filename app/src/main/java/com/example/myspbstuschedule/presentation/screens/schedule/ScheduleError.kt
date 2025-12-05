@@ -25,7 +25,5 @@ fun ScheduleError(
         )
 
         Spacer(modifier = Modifier.padding(8.dp))
-
-        // TODO(кнопка перезагрузки)
     }
 }
