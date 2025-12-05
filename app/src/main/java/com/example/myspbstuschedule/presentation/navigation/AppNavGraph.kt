@@ -1,0 +1,40 @@
+package com.example.myspbstuschedule.presentation.navigation
+
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
+
+@Composable
+fun AppNavGraph(
+    modifier: Modifier = Modifier,
+    startDestination : String,
+    navHostController: NavHostController,
+    selectionScreen: @Composable () -> Unit,
+    scheduleScreen: @Composable () -> Unit,
+) {
+    NavHost(
+        modifier = modifier,
+        navController = navHostController,
+        startDestination = startDestination
+    ) {
+
+        composable(Routes.Selection.route) {
+            selectionScreen()
+        }
+
+        composable(
+            route = Routes.Schedule.route,
+            arguments = listOf(
+                navArgument(Routes.KEY_MODE) { type = NavType.StringType },
+                navArgument(Routes.KEY_ID) { type = NavType.IntType }
+            )
+        ) {
+            scheduleScreen()
+        }
+    }
+
+}
