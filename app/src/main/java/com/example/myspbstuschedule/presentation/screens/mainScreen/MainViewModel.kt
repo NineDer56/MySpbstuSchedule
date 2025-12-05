@@ -4,13 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myspbstuschedule.data.datastore.SavedSettings
 import com.example.myspbstuschedule.data.datastore.SettingsDataStore
+import com.example.myspbstuschedule.presentation.navigation.Routes
 import com.example.myspbstuschedule.presentation.screens.selection.SearchMode
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -23,15 +22,25 @@ class MainViewModel @Inject constructor(
     private val _selectedNameState = MutableStateFlow<String>("")
     val selectedNameState = _selectedNameState.asStateFlow()
 
-    private val _isLoadingState = MutableStateFlow(false)
-    val isLoadingState = _isLoadingState.asStateFlow()
+    private val _startDestinationState = MutableStateFlow<String?>(null)
+    val startDestinationState = _startDestinationState.asStateFlow()
 
-    suspend fun checkLastSelection() : Boolean {
-        return getLastSelection() != null
+
+    init {
+        viewModelScope.launch {
+            val lastSelection = getLastSelection()
+            if (lastSelection != null && lastSelection.mode == SearchMode.GROUP) {
+                _startDestinationState.value = Routes.Schedule.getRoute(
+                    mode = lastSelection.mode,
+                    id = lastSelection.id
+                )
+            } else {
+                _startDestinationState.value = Routes.Selection.route
+            }
+        }
     }
 
-
-    suspend fun getLastSelection(): SavedSettings? {
+    private suspend fun getLastSelection(): SavedSettings? {
         val result = withContext(Dispatchers.IO) {
             settingsDataStore.getLastSelection()
         }
@@ -60,6 +69,7 @@ class MainViewModel @Inject constructor(
 
     fun clearSelection() {
         viewModelScope.launch {
+            _selectedNameState.value = ""
             settingsDataStore.resetLastSelectedGroup()
             settingsDataStore.resetLastSelectedTeacher()
         }

@@ -21,7 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -51,24 +50,6 @@ fun MainScreen(
 
     val navBackStackEntry = navigationState.navHostController.currentBackStackEntryAsState()
     val destination = navBackStackEntry.value?.destination?.route
-
-    LaunchedEffect(Unit) {
-        val lastSelection = viewModel.getLastSelection()
-        Log.d("Navigation", "last selection $lastSelection")
-        lastSelection?.let {
-            when (it.mode) {
-                SearchMode.GROUP -> {
-                    navigationState.navigateToSchedule(SearchMode.GROUP, it.id)
-                    Log.d("Navigation", "Navigate to group ${it.id}")
-                }
-
-                SearchMode.TEACHER -> {
-                    navigationState.navigateToSchedule(SearchMode.TEACHER, it.id)
-                    Log.d("Navigation", "Navigate to teacher ${it.id}")
-                }
-            }
-        }
-    }
 
     Scaffold(
         topBar = {
