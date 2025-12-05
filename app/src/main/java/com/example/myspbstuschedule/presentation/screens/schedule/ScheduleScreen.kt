@@ -32,8 +32,6 @@ fun ScheduleScreen(
             .fillMaxSize()
     ) {
         ScheduleContent(
-            modifier = Modifier
-                .padding(contentPadding),
             dates = state.weekDays,
             selectedDay = state.selectedDayOfWeek,
             onDateChange = { offset ->

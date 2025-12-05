@@ -4,10 +4,14 @@ import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -21,6 +25,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -113,7 +118,7 @@ fun MainScreen(
 
             scheduleScreen = {
                 ScheduleScreen(
-                    contentPadding = PaddingValues(top = 8.dp, start = 8.dp, end = 8.dp)
+                    contentPadding = PaddingValues(top = 0.dp, start = 8.dp, end = 8.dp)
                 )
             }
         )
@@ -151,40 +156,56 @@ private fun TopAppBarForScheduleScreen(
     name: String,
     onIconClick: () -> Unit
 ) {
-    TopAppBar(
-        title = {
-            Column {
-                Text(
-                    text = "Schedule",
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 32.sp
-                )
-                Text(
-                    modifier = Modifier.padding(start = 12.dp),
-                    text = name,
-                    fontSize = 16.sp,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = MaterialTheme.colorScheme.onSurface,
-            scrolledContainerColor = MaterialTheme.colorScheme.primary
-        ),
-        actions = {
-            IconButton(
-                onClick = onIconClick
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Create,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurface
-                )
-            }
-        },
+    ElevatedCard(
         modifier = Modifier
-            .clip(RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp))
-    )
+            .fillMaxWidth(),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 0.dp
+        ),
+        colors = CardColors(
+            containerColor = MaterialTheme.colorScheme.background,
+            contentColor = MaterialTheme.colorScheme.onBackground,
+            disabledContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
+            disabledContentColor = MaterialTheme.colorScheme.onBackground
+        ),
+        shape = RectangleShape
+    ) {
+        TopAppBar(
+            title = {
+                Column {
+                    Text(
+                        text = "Schedule",
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 32.sp
+                    )
+                    Text(
+                        modifier = Modifier.padding(start = 12.dp),
+                        text = name,
+                        fontSize = 16.sp,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+            },
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = MaterialTheme.colorScheme.onSurface,
+                scrolledContainerColor = MaterialTheme.colorScheme.primary
+            ),
+            actions = {
+                IconButton(
+                    onClick = onIconClick
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Create,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+            },
+            modifier = Modifier
+                .clip(RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp))
+        )
+
+    }
 }

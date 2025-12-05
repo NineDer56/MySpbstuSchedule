@@ -1,20 +1,21 @@
 package com.example.myspbstuschedule.presentation.screens.schedule
 
+import android.widget.Space
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CardElevation
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -22,7 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,6 +38,7 @@ import com.example.myspbstuschedule.ui.theme.MySpbstuScheduleTheme
 @Composable
 fun ScheduleItem(
     lesson: Lesson,
+    index: Int,
     modifier: Modifier = Modifier
 ) {
     ElevatedCard(
@@ -47,7 +48,7 @@ fun ScheduleItem(
             defaultElevation = 8.dp
         ),
         colors = CardColors(
-            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+            containerColor = MaterialTheme.colorScheme.background,
             contentColor = MaterialTheme.colorScheme.onBackground,
             disabledContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
             disabledContentColor = MaterialTheme.colorScheme.onBackground
@@ -55,22 +56,39 @@ fun ScheduleItem(
 
     ) {
 
-        Spacer(modifier = Modifier.padding(8.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth()
+                .height(IntrinsicSize.Min)
+        ){
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Spacer(modifier = Modifier.padding(4.dp))
 
-        Header(lesson = lesson)
+                Header(lesson = lesson, index = index)
 
-        Spacer(modifier = Modifier.padding(8.dp))
+                Spacer(modifier = Modifier.padding(4.dp))
 
-        SubjectInformation(lesson = lesson)
+                SubjectInformation(lesson = lesson)
 
-        Spacer(modifier = Modifier.padding(4.dp))
+                Spacer(modifier = Modifier.padding(4.dp))
+            }
+            Spacer(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .background(MaterialTheme.colorScheme.primary)
+                    .width(8.dp)
+            )
+        }
+
     }
 }
 
 
 @Composable
 private fun Header(
-    lesson: Lesson
+    lesson: Lesson,
+    index: Int
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -85,33 +103,33 @@ private fun Header(
 
         ) {
             Text(
-                text = "1",
+                text = index.toString(),
                 fontSize = 18.sp,
                 color = MaterialTheme.colorScheme.onPrimary
             )
         }
 
-        Spacer(modifier = Modifier.padding(8.dp))
+        Spacer(modifier = Modifier.padding(4.dp))
 
         Text(
             text = "${lesson.timeStart} - ${lesson.timeEnd}",
-            fontSize = 18.sp,
+            fontSize = 16.sp,
             color = MaterialTheme.colorScheme.primary
         )
 
-        Spacer(modifier = Modifier.padding(8.dp))
+        Spacer(modifier = Modifier.padding(4.dp))
 
         Box(
             modifier = Modifier
                 .weight(1f),
             contentAlignment = Alignment.CenterEnd
-        ){
+        ) {
             Text(
-                modifier = Modifier.width(140.dp),
+                modifier = Modifier.width(160.dp),
                 text = "${lesson.auditories[0].building.name}, ауд.${lesson.auditories[0].name}",
-                fontSize = 18.sp,
+                fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.primary,
-                textAlign = TextAlign.End
+                textAlign = TextAlign.End,
             )
         }
 
@@ -134,7 +152,7 @@ fun SubjectInformation(
             color = MaterialTheme.colorScheme.onBackground
         )
 
-        Spacer(modifier = Modifier.padding(8.dp))
+        Spacer(modifier = Modifier.padding(4.dp))
 
         Text(
             text = lesson.lessonType.name,
@@ -142,7 +160,7 @@ fun SubjectInformation(
             color = MaterialTheme.colorScheme.onBackground
         )
 
-        Spacer(modifier = Modifier.padding(8.dp))
+        Spacer(modifier = Modifier.padding(4.dp))
 
         Text(
             text = lesson.teachers[0].name,
@@ -167,8 +185,9 @@ fun ScheduleItemPreview() {
                 lessonType = LessonType(1, "Лабораторные", "Лаб"),
                 groups = emptyList(),
                 teachers = listOf(Teacher(1, "Брык Иван Юрьевич", "")),
-                auditories = listOf(Auditory(1, "215", Building(1, "11-й учебный корпус", "11 к.")))
-            )
+                auditories = listOf(Auditory(1, "кафедра", Building(1, "Военная кафедра", "11 к.")))
+            ),
+            1
         )
     }
 }

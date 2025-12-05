@@ -12,16 +12,24 @@ import com.example.myspbstuschedule.domain.model.Lesson
 @Composable
 fun ScheduleContentItems(
     modifier: Modifier = Modifier,
-    lessons : List<Lesson>
+    lessons: List<Lesson>
 ) {
     LazyColumn(
         modifier = modifier
     ) {
-        items(items = lessons) { lesson ->
-            ScheduleItem(
-                lesson = lesson
-            )
-            Spacer(modifier = Modifier.padding(8.dp))
+        lessons.forEachIndexed { index, lesson ->
+            if (index == 0) {
+                item {
+                    Spacer(modifier = Modifier.padding(8.dp))
+                }
+            }
+            item {
+                ScheduleItem(
+                    lesson = lesson,
+                    index = index + 1
+                )
+                Spacer(modifier = Modifier.padding(8.dp))
+            }
         }
     }
 }
