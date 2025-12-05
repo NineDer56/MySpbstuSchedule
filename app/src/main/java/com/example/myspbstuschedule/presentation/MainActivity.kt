@@ -1,4 +1,4 @@
-package com.example.myspbstuschedule
+package com.example.myspbstuschedule.presentation
 
 import android.animation.ObjectAnimator
 import android.os.Bundle
@@ -13,7 +13,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.myspbstuschedule.presentation.screens.mainScreen.MainScreen
 import com.example.myspbstuschedule.presentation.screens.mainScreen.MainViewModel
-import com.example.myspbstuschedule.ui.theme.MySpbstuScheduleTheme
+import com.example.myspbstuschedule.presentation.theme.MySpbstuScheduleTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

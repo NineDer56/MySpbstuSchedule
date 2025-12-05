@@ -1,18 +1,8 @@
-package com.example.myspbstuschedule.ui.theme
+package com.example.myspbstuschedule.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
-
-
-
-val Black20 = Color(0xFF0E0E0E)
 val Green40 = Color(0xFF29B91B)
 val Gray20 = Color(0xFF313131)
 val Gray30 = Color(0xFF343434)
@@ -25,6 +15,5 @@ val Gray80 = Color(0xFFBDBDBD)
 
 
 val White60 = Color(0xFFE5E5E5)
-val White80 = Color(0xFFFFFFFF)
 val Green60 = Color(0xFF2AD018)
 val Gray60 = Color(0xFF525252)

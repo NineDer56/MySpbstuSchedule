@@ -1,8 +1,8 @@
 package com.example.myspbstuschedule.data
 
 import android.util.Log
-import com.example.myspbstuschedule.data.local.DatabaseMapper
-import com.example.myspbstuschedule.data.local.ScheduleDao
+import com.example.myspbstuschedule.data.local.mapper.DatabaseMapper
+import com.example.myspbstuschedule.data.local.db.ScheduleDao
 import com.example.myspbstuschedule.data.network.api.NetworkApi
 import com.example.myspbstuschedule.data.network.mapper.NetworkMapper.toApiRequest
 import com.example.myspbstuschedule.data.network.mapper.NetworkMapper.toDbRequest

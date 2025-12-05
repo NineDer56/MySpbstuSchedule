@@ -1,4 +1,4 @@
-package com.example.myspbstuschedule.ui.theme
+package com.example.myspbstuschedule.presentation.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

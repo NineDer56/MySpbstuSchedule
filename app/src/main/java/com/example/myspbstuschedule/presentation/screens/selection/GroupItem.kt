@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myspbstuschedule.domain.model.Faculty
 import com.example.myspbstuschedule.domain.model.Group
-import com.example.myspbstuschedule.ui.theme.MySpbstuScheduleTheme
+import com.example.myspbstuschedule.presentation.theme.MySpbstuScheduleTheme
 
 @Composable
 fun GroupItem(

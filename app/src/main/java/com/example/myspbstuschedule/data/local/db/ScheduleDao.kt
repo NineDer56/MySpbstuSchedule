@@ -1,10 +1,9 @@
-package com.example.myspbstuschedule.data.local
+package com.example.myspbstuschedule.data.local.db
 
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
 import com.example.myspbstuschedule.data.local.entity.ScheduleEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ScheduleDao {

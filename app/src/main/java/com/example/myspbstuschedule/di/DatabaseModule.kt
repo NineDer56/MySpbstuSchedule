@@ -2,9 +2,9 @@ package com.example.myspbstuschedule.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.myspbstuschedule.data.local.DatabaseMapper
-import com.example.myspbstuschedule.data.local.ScheduleDao
-import com.example.myspbstuschedule.data.local.ScheduleDatabase
+import com.example.myspbstuschedule.data.local.mapper.DatabaseMapper
+import com.example.myspbstuschedule.data.local.db.ScheduleDao
+import com.example.myspbstuschedule.data.local.db.ScheduleDatabase
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides

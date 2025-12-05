@@ -1,4 +1,4 @@
-package com.example.myspbstuschedule.data.local
+package com.example.myspbstuschedule.data.local.mapper
 
 import com.example.myspbstuschedule.data.local.entity.ScheduleEntity
 import com.example.myspbstuschedule.domain.model.Schedule

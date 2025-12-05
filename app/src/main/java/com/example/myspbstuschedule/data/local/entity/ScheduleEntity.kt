@@ -23,5 +23,3 @@ data class ScheduleEntity(
     @ColumnInfo(name = "schedule_json")
     val scheduleJson: String
 )
-
-// TODO разобраться нужно ли добавлять индексы

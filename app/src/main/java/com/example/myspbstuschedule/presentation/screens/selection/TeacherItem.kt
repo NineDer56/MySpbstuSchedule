@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myspbstuschedule.domain.model.Teacher
-import com.example.myspbstuschedule.ui.theme.MySpbstuScheduleTheme
+import com.example.myspbstuschedule.presentation.theme.MySpbstuScheduleTheme
 
 @Composable
 fun TeacherItem(

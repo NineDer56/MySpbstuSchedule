@@ -1,6 +1,5 @@
 package com.example.myspbstuschedule.presentation.screens.schedule
 
-import android.widget.Space
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,7 +32,7 @@ import com.example.myspbstuschedule.domain.model.Building
 import com.example.myspbstuschedule.domain.model.Lesson
 import com.example.myspbstuschedule.domain.model.LessonType
 import com.example.myspbstuschedule.domain.model.Teacher
-import com.example.myspbstuschedule.ui.theme.MySpbstuScheduleTheme
+import com.example.myspbstuschedule.presentation.theme.MySpbstuScheduleTheme
 
 @Composable
 fun ScheduleItem(
