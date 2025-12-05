@@ -14,14 +14,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 fun SelectionScreen(
     contentPadding: PaddingValues,
-    onGroupItemClick: (groupId: Int, name : String) -> Unit,
-    onTeacherItemClick: (teacherId: Int, name : String) -> Unit
+    onGroupItemClick: (groupId: Int, name: String) -> Unit,
+    onTeacherItemClick: (teacherId: Int, name: String) -> Unit
 ) {
     val viewModel: SelectionViewModel = hiltViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -42,7 +43,7 @@ fun SelectionScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
-                .padding(contentPadding)
+                .padding(top = 8.dp, start = 8.dp, end = 8.dp)
         ) {
             when (val currentState = state) {
                 is SelectionState.Initial -> {

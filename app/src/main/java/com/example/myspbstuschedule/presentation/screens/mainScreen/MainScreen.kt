@@ -102,7 +102,7 @@ fun MainScreen(
 
             selectionScreen = {
                 SelectionScreen(
-                    contentPadding = PaddingValues(top = 8.dp, start = 8.dp, end = 8.dp),
+                    contentPadding = PaddingValues(horizontal = 8.dp),
                     onGroupItemClick = { groupId, name ->
                         Log.d("Navigation", "selected group $groupId")
                         viewModel.onSelected(SearchMode.GROUP, groupId, name)
@@ -118,7 +118,7 @@ fun MainScreen(
 
             scheduleScreen = {
                 ScheduleScreen(
-                    contentPadding = PaddingValues(top = 0.dp, start = 8.dp, end = 8.dp)
+                    contentPadding = PaddingValues(horizontal = 8.dp)
                 )
             }
         )
